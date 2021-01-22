@@ -1,0 +1,22 @@
+{
+  "name": "dan-algorithm-datastructure",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "BT": "nodemon --exec babel-node Datastructure/Tree/BinaryTree.js",
+    "BST": "nodemon --exec babel-node Datastructure/Tree/BinarySearchTree.js",
+    "Graph": "nodemon --exec babel-node Datastructure/Graph/Graph.js"
+  },
+  "author": "Daniel Lin",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/node": "^7.5.5",
+    "@babel/plugin-transform-runtime": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/runtime": "^7.5.5",
+    "nodemon": "^1.19.1"
+  }
+}
