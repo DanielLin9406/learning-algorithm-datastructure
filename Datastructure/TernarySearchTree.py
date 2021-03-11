@@ -1,6 +1,6 @@
 from pprint import pprint
 
-
+# REF: https://iq.opengenus.org/autocomplete-with-ternary-search-tree/
 class Node:
     def __init__(self, value=None, end_of_Word=False):
         self.value = value
