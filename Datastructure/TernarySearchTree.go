@@ -85,10 +85,13 @@ func (a *AutoCompleteTree) AllSuffixes(pattern string, node *Node, results []str
 	if node.endTag {
 		return append(results, fmt.Sprintf("%s%s", pattern, node.value))
 	} else if node.left != nil {
+		fmt.Println("left")
 		return append(results, a.AllSuffixes(pattern, node.left, results)...)
 	} else if node.right != nil {
+		fmt.Println("right")
 		return append(results, a.AllSuffixes(pattern, node.right, results)...)
 	} else if node.middle != nil {
+		fmt.Println("middle")
 		return append(results, a.AllSuffixes(fmt.Sprintf("%s%s", pattern, node.value), node.middle, results)...)
 	}
 	return []string{}
@@ -123,7 +126,9 @@ func (a *AutoCompleteTree) find_(pat string) []string {
 		}
 	}
 	fmt.Println("pars", pat, node.value)
-	return a.AllSuffixes(pat, node, results)
+	b := a.AllSuffixes(pat, node, results)
+	fmt.Println("cccc", b)
+	return b
 }
 
 // NewAutoCompleteTree define construction
