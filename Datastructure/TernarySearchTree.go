@@ -83,7 +83,12 @@ func (a *AutoCompleteTree) Insert(word string, node *Node) *Node {
 func (a *AutoCompleteTree) AllSuffixes(pattern string, node *Node, results []string) []string {
 	if node.endTag {
 		fmt.Println("endTag: ", pattern, node.value)
-		return []string{fmt.Sprintf("%s%s", pattern, node.value)}
+		results = append(results, fmt.Sprintf("%s%s", pattern, node.value))
+		return results
+	} else if node.left != nil {
+		fmt.Println("left")
+		results = append(results, a.AllSuffixes(pattern, node.left, results)...)
+		return results
 	} else if node.right != nil {
 		fmt.Println("right")
 		results = append(results, a.AllSuffixes(pattern, node.right, results)...)
@@ -91,11 +96,6 @@ func (a *AutoCompleteTree) AllSuffixes(pattern string, node *Node, results []str
 	} else if node.middle != nil {
 		fmt.Println("middle")
 		results = append(results, a.AllSuffixes(fmt.Sprintf("%s%s", pattern, node.value), node.middle, results)...)
-		return results
-		// }
-	} else if node.left != nil {
-		fmt.Println("left")
-		results = append(results, a.AllSuffixes(pattern, node.left, results)...)
 		return results
 	}
 	return results
