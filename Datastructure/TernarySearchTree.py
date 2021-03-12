@@ -83,11 +83,12 @@ class AutoCompleteTree:
                 if not node:
                     return None
 
-        print([i for i in self.all_suffixes(pattern, node)])
-        # return self.all_suffixes(pattern, node)
+        # print([i for i in self.all_suffixes(pattern, node)])
+        print("pars", pattern, node.value)
+        return self.all_suffixes(pattern, node)
 
 
-pattern = ["b"]
+pattern = ["c"]
 word_list = [
     "aardvark",
     "altimeter",
@@ -112,4 +113,4 @@ word_list = [
 
 t = AutoCompleteTree(word_list)
 pprint(t.n.equal.equal.value)
-# print(t.find(pattern))
+print(t.find(pattern))
