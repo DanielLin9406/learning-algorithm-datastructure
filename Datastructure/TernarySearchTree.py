@@ -40,6 +40,7 @@ class AutoCompleteTree:
 
     def all_suffixes(self, pattern, node):
         if node.end_of_Word:
+            print("{0}{1}".format(pattern, node.value))  # a complete word
             yield "{0}{1}".format(pattern, node.value)
 
         if node.left:
@@ -50,6 +51,11 @@ class AutoCompleteTree:
                 yield word
         if node.equal:
             for word in self.all_suffixes(pattern + node.value, node.equal):
+                print("word", word)
+                print("pattern", pattern)
+                print("node.value", node.value)
+                print("node.equal.value", node.equal.value)
+                print("---")
                 yield word
 
     def find(self, pattern):
@@ -75,10 +81,12 @@ class AutoCompleteTree:
                     break
                 if not node:
                     return None
-        return self.all_suffixes(pattern, node)
+
+        print([i for i in self.all_suffixes(pattern, node)])
+        # return self.all_suffixes(pattern, node)
 
 
-pattern = ["b", "a"]
+pattern = ["b"]
 word_list = [
     "aardvark",
     "altimeter",
