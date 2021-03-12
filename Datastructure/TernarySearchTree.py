@@ -113,12 +113,15 @@ word_list = [
 ]
 
 t = AutoCompleteTree(word_list)
-# pprint(t.n.right.right.value)  # c
-# pprint(t.n.right.right.equal.right.value)  # h
+pprint(t.n.right.right.value)  # c
+pprint(t.n.right.right.equal.right.value)  # h
+pprint(t.n.right.right.equal.right.equal.value)  # y
 
-# pprint(t.n.right.right.value)  # c
-# pprint(t.n.right.right.equal.value)  # a
-# pprint(t.n.right.right.equal.equal.value)  # r
+pprint(t.n.right.right.value)  # c
+pprint(t.n.right.right.equal.value)  # a
+pprint(t.n.right.right.equal.equal.value)  # r
+pprint(t.n.right.right.equal.equal.equal.value)  # b
+pprint(t.n.right.right.equal.equal.equal.equal.value)  # u
 # # pprint(t.n.middle.right.right.value)
 # pprint(t.n.right.right.value)
 # pprint(t.n.equal.equal.value)
