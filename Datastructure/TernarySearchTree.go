@@ -113,7 +113,6 @@ func (a *AutoCompleteTree) Find(pattern []string) {
 
 func (a *AutoCompleteTree) find_(pat string) []string {
 	node := a.node
-	var results []string
 	for _, runedChar := range pat {
 		for true {
 			if runedChar > node.r {
@@ -130,7 +129,7 @@ func (a *AutoCompleteTree) find_(pat string) []string {
 		}
 	}
 	fmt.Println("pars", pat, node.value)
-	b := a.AllSuffixes(pat, node, results)
+	b := a.AllSuffixes(pat, node, []string{})
 	fmt.Println("cccc", b)
 	return b
 }
