@@ -80,56 +80,50 @@ func (a *AutoCompleteTree) Insert(word string, node *Node) *Node {
 	return node
 }
 
-func (a *AutoCompleteTree) AllSuffixes(pattern string, node *Node) <-chan string {
-	fmt.Printf("%s")
-	b := make(chan string)
+func (a *AutoCompleteTree) AllSuffixes(pattern string, node *Node, results []string) []string {
+	fmt.Println(pattern, node.value)
 	if node.endTag {
-		c := make(chan string)
-		go func() {
-			fmt.Println(pattern, node.value)
-			c <- fmt.Sprintf("%s%s", pattern, node.value)
-		}()
-		close(c)
-		return c
+		return append(results, fmt.Sprintf("%s%s", pattern, node.value))
+	} else if node.left != nil {
+		return append(results, a.AllSuffixes(pattern, node.left, results)...)
+	} else if node.right != nil {
+		return append(results, a.AllSuffixes(pattern, node.right, results)...)
+	} else if node.middle != nil {
+		return append(results, a.AllSuffixes(fmt.Sprintf("%s%s", pattern, node.value), node.middle, results)...)
 	}
-	if node.left != nil {
-		return a.AllSuffixes(pattern, node.left)
-	}
-	if node.right != nil {
-		return a.AllSuffixes(pattern, node.right)
-	}
-	if node.middle != nil {
-		return a.AllSuffixes(pattern+node.value, node.middle)
-	}
-	return b
+	return []string{}
 }
 
 func (a *AutoCompleteTree) Find(pattern []string) {
 	pat := string(pattern[0])
+
 	wordChan := a.find_(pat)
-	for word := range wordChan {
-		fmt.Printf("Founded value: %s", word)
-	}
+	fmt.Println(wordChan)
+	// for word := range wordChan {
+	// 	fmt.Printf("Founded value: %s \n", word)
+	// }
 }
 
-func (a *AutoCompleteTree) find_(pat string) <-chan string {
-	var node *Node
-	for _, char := range pat {
+func (a *AutoCompleteTree) find_(pat string) []string {
+	node := a.node
+	var results []string
+	for _, runedChar := range pat {
 		for true {
-			if string(char) > a.node.value {
-				node = a.node.right
-			} else if string(char) < a.node.value {
-				node = a.node.left
+			if runedChar > node.r {
+				node = node.right
+			} else if runedChar < node.r {
+				node = node.left
 			} else {
-				node = a.node.middle
+				node = node.middle
 				break
 			}
 			if node == nil {
-				return nil
+				break
 			}
 		}
 	}
-	return a.AllSuffixes(pat, node)
+	fmt.Println("pars", pat, node.value)
+	return a.AllSuffixes(pat, node, results)
 }
 
 // NewAutoCompleteTree define construction
@@ -141,6 +135,8 @@ func NewAutoCompleteTree(wordList []string) *AutoCompleteTree {
 		},
 	}
 	t.init(wordList)
-	fmt.Printf("Value: %s", t.node.right.value)
+	// fmt.Printf("Value: %s", t.node.middle.middle.value)
+	fmt.Printf("----\n")
+	t.Find([]string{"c"})
 	return t
 }
