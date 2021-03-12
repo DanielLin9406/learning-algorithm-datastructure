@@ -60,6 +60,7 @@ class AutoCompleteTree:
 
     def find(self, pattern):
         final_pattern = {pat: set([]) for pat in pattern}
+
         for pat in final_pattern.keys():
             word = self.find_(pat)
             if word == None:
@@ -110,5 +111,5 @@ word_list = [
 ]
 
 t = AutoCompleteTree(word_list)
-pprint(t.n.right.value)
-print(t.find(pattern))
+pprint(t.n.equal.equal.value)
+# print(t.find(pattern))
