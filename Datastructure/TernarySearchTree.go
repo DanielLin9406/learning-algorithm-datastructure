@@ -66,8 +66,15 @@ func (a *AutoCompleteTree) Insert(word string, node *Node) {
 	}
 }
 
-func (a *AutoCompleteTree) AllSuffixes() {
+func (a *AutoCompleteTree) AllSuffixes(pattern []string, node Node) {
+	if node.endTag {
+		c := make(chan int)
+		go func() {
 
+		}()
+		close(c)
+		return
+	}
 }
 
 func (a *AutoCompleteTree) find() {}
