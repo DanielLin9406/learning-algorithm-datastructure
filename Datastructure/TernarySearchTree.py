@@ -83,11 +83,10 @@ class AutoCompleteTree:
                 if not node:
                     return None
 
-        print([i for i in self.all_suffixes(pattern, node)])
+        # print([i for i in self.all_suffixes(pattern, node)])
         print("pars", pattern, node.value)
-        a = self.all_suffixes(pattern, node)
         # print("a", a)
-        return a
+        return self.all_suffixes(pattern, node)
 
 
 pattern = ["c"]
@@ -114,13 +113,13 @@ word_list = [
 ]
 
 t = AutoCompleteTree(word_list)
-pprint(t.n.right.right.value)  # c
-pprint(t.n.right.right.equal.right.value)
+# pprint(t.n.right.right.value)  # c
+# pprint(t.n.right.right.equal.right.value)  # h
 
-pprint(t.n.right.right.value)  # c
-pprint(t.n.right.right.equal.value)  # a
-pprint(t.n.right.right.equal.equal.value)  # r
-# pprint(t.n.middle.right.right.value)
+# pprint(t.n.right.right.value)  # c
+# pprint(t.n.right.right.equal.value)  # a
+# pprint(t.n.right.right.equal.equal.value)  # r
+# # pprint(t.n.middle.right.right.value)
 # pprint(t.n.right.right.value)
 # pprint(t.n.equal.equal.value)
-# print(t.find(pattern))
+print(t.find(pattern))
