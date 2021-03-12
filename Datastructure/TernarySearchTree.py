@@ -51,11 +51,11 @@ class AutoCompleteTree:
                 yield word
         if node.equal:
             for word in self.all_suffixes(pattern + node.value, node.equal):
-                print("word", word)
-                print("pattern", pattern)
-                print("node.value", node.value)
-                print("node.equal.value", node.equal.value)
-                print("---")
+                # print("word", word)
+                # print("pattern", pattern)
+                # print("node.value", node.value)
+                # print("node.equal.value", node.equal.value)
+                # print("---")
                 yield word
 
     def find(self, pattern):
@@ -83,9 +83,11 @@ class AutoCompleteTree:
                 if not node:
                     return None
 
-        # print([i for i in self.all_suffixes(pattern, node)])
+        print([i for i in self.all_suffixes(pattern, node)])
         print("pars", pattern, node.value)
-        return self.all_suffixes(pattern, node)
+        a = self.all_suffixes(pattern, node)
+        # print("a", a)
+        return a
 
 
 pattern = ["c"]
