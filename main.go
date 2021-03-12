@@ -26,6 +26,13 @@ var wordList = []string{
 	"melanthaceae",
 }
 
+// var wordList2 = []string{
+// 	"abcdef",
+// 	"adghjkl",
+// 	"bagonet",
+// }
+
 func main() {
 	tree.NewAutoCompleteTree(wordList)
+	// a.Find([]string{"b"})
 }
