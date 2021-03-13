@@ -39,7 +39,7 @@ class AutoCompleteTree:
             self.insert(word[1:], node.equal)
 
     def all_suffixes(self, pattern, node):
-        print("this node", node.value)
+        # print("this node", node.value)
         # print("compared:", node.r)
         if node.end_of_Word:
             print("{0}{1}".format(pattern, node.value))  # a complete word
@@ -55,7 +55,7 @@ class AutoCompleteTree:
                 # print("right")
                 yield word
         if node.equal:
-            print("in equal", node.equal.value, pattern)
+            # print("in equal", node.equal.value, pattern)
             for word in self.all_suffixes(pattern + node.value, node.equal):
                 # print("word", word)
                 # print("pattern", pattern)
@@ -78,7 +78,7 @@ class AutoCompleteTree:
 
     def find_(self, pattern):
         node = self.n
-        print("pars", node.equal.equal.equal.value)
+        # print("pars", node.value)
         for char in pattern:
             while True:
                 if char > node.value:
@@ -92,9 +92,9 @@ class AutoCompleteTree:
                     return None
 
         # print([i for i in self.all_suffixes(pattern, node)])
-        # print("pars", node.equal.value)
+        print("pars", node.right.equal.left.value)
         # print("a", a)
-        return self.all_suffixes(pattern, node)
+        # return self.all_suffixes(pattern, node)
 
 
 pattern = ["c"]
