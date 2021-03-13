@@ -28,7 +28,7 @@ func (a *AutoCompleteTree) init(wordList []string) {
 		// fmt.Printf("value: %v \n", a.node.value)
 		a.node = a.Insert(word, a.node)
 	}
-	fmt.Printf("value: %v \n", a.node)
+	// fmt.Printf("value: %v \n", a.node)
 	// fmt.Printf("left value: %v \n", a.node.left.value)
 	// fmt.Printf("right value: %v \n", a.node.right.value)
 }
@@ -43,7 +43,7 @@ func (a *AutoCompleteTree) Insert(word string, node *Node) *Node {
 	if node.value == "" {
 		node.value = char
 		node.r = r
-		fmt.Printf("node.value %s\n", node.value)
+		// fmt.Printf("node.value %s\n", node.value)
 	}
 	if r < node.r {
 		if node.left == nil {
@@ -53,7 +53,7 @@ func (a *AutoCompleteTree) Insert(word string, node *Node) *Node {
 			}
 		}
 		node.left = a.Insert(word, node.left)
-		fmt.Printf("node.left %s\n", node.left.value)
+		// fmt.Printf("node.left %s\n", node.left.value)
 	} else if r > node.r {
 		if node.right == nil {
 			node.right = &Node{
@@ -62,7 +62,7 @@ func (a *AutoCompleteTree) Insert(word string, node *Node) *Node {
 			}
 		}
 		node.right = a.Insert(word, node.right)
-		fmt.Printf("node.right %s\n", node.right.value)
+		// fmt.Printf("node.right %s\n", node.right.value)
 	} else {
 		if len(word) == 1 {
 			node.endTag = true
@@ -75,27 +75,39 @@ func (a *AutoCompleteTree) Insert(word string, node *Node) *Node {
 			}
 		}
 		node.middle = a.Insert(word[1:], node.middle)
-		fmt.Printf("node.middle %s\n", node.middle.value)
+		// fmt.Printf("node.middle %s\n", node.middle.value)
 	}
 	return node
 }
 
-func (a *AutoCompleteTree) AllSuffixes(pattern string, node *Node, results map[string][]string) []string {
+func (a *AutoCompleteTree) AllSuffixes(pattern string, node *Node, results []string) []string {
 	if node.endTag {
 		fmt.Println("endTag: ", pattern, node.value)
-		return append(results[fmt.Sprintf("%s%s", pattern, node.value)], fmt.Sprintf("%s%s", pattern, node.value))
+		return append(results, fmt.Sprintf("%s%s", pattern, node.value))
 	} else if node.left != nil {
 		fmt.Println("left")
-		return append(results[fmt.Sprintf("%s%s", pattern, node.value)], a.AllSuffixes(pattern, node.left, results)...)
+		for _, word := range a.AllSuffixes(pattern, node.left, results) {
+			results = append(results, word)
+			return results
+		}
 	} else if node.right != nil {
 		fmt.Println("right")
-		return append(results[fmt.Sprintf("%s%s", pattern, node.value)], a.AllSuffixes(pattern, node.right, results)...)
+		for _, word := range a.AllSuffixes(pattern, node.right, results) {
+			results = append(results, word)
+			fmt.Println("middle Result", results)
+			return results
+		}
+		// return append(results[fmt.Sprintf("%s%s", pattern, node.value)], ...)
 	} else if node.middle != nil {
 		fmt.Println("middle")
+		for _, word := range a.AllSuffixes(fmt.Sprintf("%s%s", pattern, node.value), node.middle, results) {
+			results = append(results, word)
+			return results
+		}
 	}
-	fmt.Println("result", results)
-	return append(results[fmt.Sprintf("%s%s", pattern, node.value)], a.AllSuffixes(fmt.Sprintf("%s%s", pattern, node.value), node.middle, results)...)
-	// return results
+	// fmt.Println("result", results)
+	// return append(results[fmt.Sprintf("%s%s", pattern, node.value)], a.AllSuffixes(fmt.Sprintf("%s%s", pattern, node.value), node.middle, results)...)
+	return results
 }
 
 func (a *AutoCompleteTree) Find(pattern []string) {
@@ -127,7 +139,7 @@ func (a *AutoCompleteTree) find_(pat string) []string {
 	}
 	fmt.Println("pars", pat, node.value)
 
-	b := a.AllSuffixes(pat, node, map[string][]string{})
+	b := a.AllSuffixes(pat, node, []string{})
 	fmt.Println("cccc", b)
 	return b
 }
@@ -141,15 +153,15 @@ func NewAutoCompleteTree(wordList []string) *AutoCompleteTree {
 		},
 	}
 	t.init(wordList)
-	fmt.Printf("Value: %s\n", t.node.right.right.value)
-	fmt.Printf("Value: %s\n", t.node.right.right.middle.right.value)
-	fmt.Printf("Value: %s\n", t.node.right.right.middle.right.middle.value)
+	// fmt.Printf("Value: %s\n", t.node.right.right.value)
+	// fmt.Printf("Value: %s\n", t.node.right.right.middle.right.value)
+	// fmt.Printf("Value: %s\n", t.node.right.right.middle.right.middle.value)
 
-	fmt.Printf("Value: %s \n", t.node.right.right.value)
-	fmt.Printf("Value: %s\n", t.node.right.right.middle.value)
-	fmt.Printf("Value: %s\n", t.node.right.right.middle.middle.value)
-	fmt.Printf("Value: %s\n", t.node.right.right.middle.middle.middle.value)
-	fmt.Printf("Value: %s\n", t.node.right.right.middle.middle.middle.middle.value)
+	// fmt.Printf("Value: %s \n", t.node.right.right.value)
+	// fmt.Printf("Value: %s\n", t.node.right.right.middle.value)
+	// fmt.Printf("Value: %s\n", t.node.right.right.middle.middle.value)
+	// fmt.Printf("Value: %s\n", t.node.right.right.middle.middle.middle.value)
+	// fmt.Printf("Value: %s\n", t.node.right.right.middle.middle.middle.middle.value)
 	fmt.Printf("----\n")
 	t.Find([]string{"c"})
 	return t
