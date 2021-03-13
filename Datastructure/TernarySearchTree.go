@@ -80,7 +80,8 @@ func (a *AutoCompleteTree) Insert(word string, node *Node) *Node {
 	return node
 }
 
-func (a *AutoCompleteTree) AllSuffixes(pattern string, node *Node, results []string) []string {
+func (a *AutoCompleteTree) AllSuffixes(pattern string, node *Node) []string {
+	// root := node
 	// fmt.Println(node)
 	// for _, r := range pattern {
 	// Start:
@@ -105,27 +106,49 @@ func (a *AutoCompleteTree) AllSuffixes(pattern string, node *Node, results []str
 	// 		return fmt.Sprintf("%s%s", pattern, node.value)
 	// 	}
 	// }
-	if node.endTag {
-		// fmt.Println("endTag: ", pattern, node.value)
-		results = append(results, fmt.Sprintf("%s%s", pattern, node.value))
-	} else if node.left != nil {
-		// fmt.Println("left")
-		for _, word := range a.AllSuffixes(pattern, node.left, results) {
-			results = append(results, word)
-		}
-	} else if node.right != nil {
-		// fmt.Println("right")
-		fmt.Println("right node", node.right)
-		for _, word := range a.AllSuffixes(pattern, node.right, results) {
-			fmt.Printf("word: %s \n", word)
-			results = append(results, word)
-		}
-	} else if node.middle != nil {
-		// fmt.Println("middle")
-		for _, word := range a.AllSuffixes(fmt.Sprintf("%s%s", pattern, node.value), node.middle, results) {
-			results = append(results, word)
-		}
-	}
+
+	// Version2:
+	// var results []string
+
+	// for true {
+	// 	if node.endTag {
+	// 		results = append(results, fmt.Sprintf("%s%s", pattern, node.value))
+	// 		fmt.Println(results)
+	// 		break
+	// 		// node = root
+	// 	} else if node.left != nil {
+	// 		node = node.left
+	// 	} else if node.right != nil {
+	// 		node = node.right
+	// 	} else if node.middle != nil {
+	// 		node = node.middle
+	// 		pattern = fmt.Sprintf("%s%s", pattern, node.value)
+	// 	}
+	// }
+	// fmt.Println(results)
+
+	// Version1:
+	// if node.endTag {
+	// 	// fmt.Println("endTag: ", pattern, node.value)
+	// 	results = append(results, fmt.Sprintf("%s%s", pattern, node.value))
+	// } else if node.left != nil {
+	// 	// fmt.Println("left")
+	// 	for _, word := range a.AllSuffixes(pattern, node.left, results) {
+	// 		results = append(results, word)
+	// 	}
+	// } else if node.right != nil {
+	// 	// fmt.Println("right")
+	// 	fmt.Println("right node", node.right)
+	// 	for _, word := range a.AllSuffixes(pattern, node.right, results) {
+	// 		fmt.Printf("word: %s \n", word)
+	// 		results = append(results, word)
+	// 	}
+	// } else if node.middle != nil {
+	// 	// fmt.Println("middle")
+	// 	for _, word := range a.AllSuffixes(fmt.Sprintf("%s%s", pattern, node.value), node.middle, results) {
+	// 		results = append(results, word)
+	// 	}
+	// }
 	// fmt.Println("result", results)
 	// return append(results[fmt.Sprintf("%s%s", pattern, node.value)], a.AllSuffixes(fmt.Sprintf("%s%s", pattern, node.value), node.middle, results)...)
 
@@ -161,7 +184,7 @@ func (a *AutoCompleteTree) find_(pat string) []string {
 	}
 	fmt.Println("pars", pat, node)
 
-	b := a.AllSuffixes(pat, node, []string{})
+	b := a.AllSuffixes(pat, node)
 	fmt.Println("cccc", b)
 	return []string{}
 }
