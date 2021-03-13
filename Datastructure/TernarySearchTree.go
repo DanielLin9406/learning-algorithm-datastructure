@@ -20,7 +20,8 @@ type AutoCompleteTreeProps struct {
 }
 
 type AutoCompleteTree struct {
-	node *Node
+	node   *Node
+	result []string
 }
 
 func (a *AutoCompleteTree) init(wordList []string) {
@@ -80,7 +81,20 @@ func (a *AutoCompleteTree) Insert(word string, node *Node) *Node {
 	return node
 }
 
-func (a *AutoCompleteTree) AllSuffixes(pattern string, node *Node) []string {
+func (a *AutoCompleteTree) AllSuffixes(pattern string, node *Node, results []string) {
+	if node == nil {
+		return
+	}
+	// fmt.Println("here: ", pattern, node.value)
+
+	if node.endTag {
+		str := fmt.Sprintf("%s%s", pattern, node.value)
+		a.result = append(a.result, str)
+	}
+	a.AllSuffixes(pattern, node.left, results)
+	a.AllSuffixes(pattern, node.right, results)
+	a.AllSuffixes(fmt.Sprintf("%s%s", pattern, node.value), node.middle, results)
+
 	// root := node
 	// fmt.Println(node)
 	// for _, r := range pattern {
@@ -152,7 +166,7 @@ func (a *AutoCompleteTree) AllSuffixes(pattern string, node *Node) []string {
 	// fmt.Println("result", results)
 	// return append(results[fmt.Sprintf("%s%s", pattern, node.value)], a.AllSuffixes(fmt.Sprintf("%s%s", pattern, node.value), node.middle, results)...)
 
-	return results
+	// return results
 }
 
 func (a *AutoCompleteTree) Find(pattern []string) {
@@ -183,9 +197,9 @@ func (a *AutoCompleteTree) find_(pat string) []string {
 		}
 	}
 	fmt.Println("pars", pat, node)
-
-	b := a.AllSuffixes(pat, node)
-	fmt.Println("cccc", b)
+	// result := []*
+	a.AllSuffixes(pat, node, []string{})
+	fmt.Println("cccc", a.result)
 	return []string{}
 }
 
@@ -208,6 +222,6 @@ func NewAutoCompleteTree(wordList []string) *AutoCompleteTree {
 	// fmt.Printf("Value: %s\n", t.node.right.right.middle.middle.middle.value)
 	// fmt.Printf("Value: %s\n", t.node.right.right.middle.middle.middle.middle.value)
 	fmt.Printf("----\n")
-	t.Find([]string{"c"})
+	t.Find([]string{"bo"})
 	return t
 }

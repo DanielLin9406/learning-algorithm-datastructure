@@ -10,6 +10,7 @@ var wordList = []string{
 	"apotactic",
 	"bagonet",
 	"boatlip",
+	"bozzzzzz",
 	"carburant",
 	"chyliferous",
 	"consonance",
