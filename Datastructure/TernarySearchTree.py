@@ -38,6 +38,7 @@ class AutoCompleteTree:
                 node.equal = Node()
             self.insert(word[1:], node.equal)
 
+    # this become one generator, but only one
     def all_suffixes(self, pattern, node):
         # print("this node", node.value)
         # print("compared:", node.r)
@@ -92,8 +93,13 @@ class AutoCompleteTree:
                     return None
 
         # print([i for i in self.all_suffixes(pattern, node)])
-        print("pars", node.right.equal.left.value)
+        # print("pars", node.right.equal.left.value)
         # print("a", a)
+        a = self.all_suffixes(pattern, node)
+        pprint(a.__next__())
+        pprint(a.__next__())
+        pprint(a.__next__())
+        pprint(a.__next__())
         # return self.all_suffixes(pattern, node)
 
 
