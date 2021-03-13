@@ -39,27 +39,30 @@ class AutoCompleteTree:
             self.insert(word[1:], node.equal)
 
     def all_suffixes(self, pattern, node):
+        print("this node", node.value)
+        # print("compared:", node.r)
         if node.end_of_Word:
             print("{0}{1}".format(pattern, node.value))  # a complete word
-            print("endtag")
+            # print("endtag")
             yield "{0}{1}".format(pattern, node.value)
 
         if node.left:
             for word in self.all_suffixes(pattern, node.left):
-                print("left")
+                # print("left")
                 yield word
         if node.right:
             for word in self.all_suffixes(pattern, node.right):
-                print("right")
+                # print("right")
                 yield word
         if node.equal:
+            print("in equal", node.equal.value, pattern)
             for word in self.all_suffixes(pattern + node.value, node.equal):
                 # print("word", word)
                 # print("pattern", pattern)
                 # print("node.value", node.value)
                 # print("node.equal.value", node.equal.value)
                 # print("---")
-                print("equal")
+                # print("equal")
                 yield word
 
     def find(self, pattern):
@@ -75,6 +78,7 @@ class AutoCompleteTree:
 
     def find_(self, pattern):
         node = self.n
+        print("pars", node.equal.equal.equal.value)
         for char in pattern:
             while True:
                 if char > node.value:
@@ -88,7 +92,7 @@ class AutoCompleteTree:
                     return None
 
         # print([i for i in self.all_suffixes(pattern, node)])
-        print("pars", pattern, node.value)
+        # print("pars", node.equal.value)
         # print("a", a)
         return self.all_suffixes(pattern, node)
 
@@ -117,15 +121,15 @@ word_list = [
 ]
 
 t = AutoCompleteTree(word_list)
-pprint(t.n.right.right.value)  # c
-pprint(t.n.right.right.equal.right.value)  # h
-pprint(t.n.right.right.equal.right.equal.value)  # y
+# pprint(t.n.right.right.value)  # c
+# pprint(t.n.right.right.equal.right.value)  # h
+# pprint(t.n.right.right.equal.right.equal.value)  # y
 
-pprint(t.n.right.right.value)  # c
-pprint(t.n.right.right.equal.value)  # a
-pprint(t.n.right.right.equal.equal.value)  # r
-pprint(t.n.right.right.equal.equal.equal.value)  # b
-pprint(t.n.right.right.equal.equal.equal.equal.value)  # u
+# pprint(t.n.right.right.value)  # c
+# pprint(t.n.right.right.equal.value)  # a
+# pprint(t.n.right.right.equal.equal.value)  # r
+# pprint(t.n.right.right.equal.equal.equal.value)  # b
+# pprint(t.n.right.right.equal.equal.equal.equal.value)  # u
 # # pprint(t.n.middle.right.right.value)
 # pprint(t.n.right.right.value)
 # pprint(t.n.equal.equal.value)
