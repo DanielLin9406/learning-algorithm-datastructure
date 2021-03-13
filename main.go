@@ -13,7 +13,7 @@ var wordList = []string{
 	"carburant",
 	"chyliferous",
 	"consonance",
-	// "cyclospondylic",
+	"cyclospondylic",
 	"dictyostele",
 	"echelon",
 	"estadal",
