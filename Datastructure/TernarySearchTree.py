@@ -75,6 +75,7 @@ class AutoCompleteTree:
                 return None
             else:
                 completions = {x for x in word}
+                print("completions", completions)
             return list(completions)
 
     def find_(self, pattern):
@@ -95,15 +96,15 @@ class AutoCompleteTree:
         # print([i for i in self.all_suffixes(pattern, node)])
         # print("pars", node.right.equal.left.value)
         # print("a", a)
-        a = self.all_suffixes(pattern, node)
-        pprint(a.__next__())
-        pprint(a.__next__())
-        pprint(a.__next__())
-        pprint(a.__next__())
-        # return self.all_suffixes(pattern, node)
+        # a = self.all_suffixes(pattern, node)
+        # pprint(a.__next__())
+        # pprint(a.__next__())
+        # pprint(a.__next__())
+        # pprint(a.__next__())
+        return self.all_suffixes(pattern, node)
 
 
-pattern = ["c"]
+pattern = ["c", "h"]
 word_list = [
     "aardvark",
     "altimeter",
