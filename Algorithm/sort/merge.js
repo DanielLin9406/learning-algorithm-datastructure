@@ -22,18 +22,23 @@ function merge(left, right) {
   }
   // if left[il] < right[ir] => left[il]進result; right[ir]走right.slice(ir)
   // 小的往前放，大的數字往後丟
-
-  const a = result.concat(left.slice(il)).concat(right.slice(ir));
-  console.log(a);
-  return a;
+  while (il < left.length) {
+    result.push(left[il]);
+    il++;
+  }
+  while (ir < right.length) {
+    result.push(right[ir]);
+    ir++;
+  }
+  // const a = result.concat(left.slice(il)).concat(right.slice(ir));
+  // console.log(a);
+  return result;
 }
 
 // return [1]
 function mergeSort(items) {
   // Terminal case: 0 or 1 item arrays don't need sorting
-  if (items.length < 2) {
-    return items;
-  }
+  if (items.length <= 1) return items;
   var middle = Math.floor(items.length / 2),
     left = items.slice(0, middle),
     right = items.slice(middle);
@@ -51,4 +56,3 @@ function mergeSort(items) {
 }
 
 const a = mergeSort([4, 5, 2, 1, 6]);
-a;
